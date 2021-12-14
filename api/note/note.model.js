@@ -4,14 +4,14 @@ const NoteSchema = new mongoose.Schema(
   {
     content: {
       type: String,
-      required: true,
+      // required: true,
     },
     important: Boolean,
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-    },
+    // userId: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: 'User',
+    //   required: true,
+    // },
   },
   {
     timestamps: true,
