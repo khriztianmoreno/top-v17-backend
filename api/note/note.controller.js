@@ -4,6 +4,7 @@ const {
   getAllNotes,
   getNoteById,
   updateNote,
+  getNoteByUser,
 } = require('./note.service');
 
 async function getAllNotesHandler(req, res) {
@@ -69,10 +70,21 @@ async function deleteNoteHandler(req, res) {
   }
 }
 
+async function getNoteByUserHandler(req, res) {
+  const { userId } = req.params;
+  try {
+    const notes = await getNoteByUser(userId);
+    return res.status(200).json(notes);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
+
 module.exports = {
   createNoteHandler,
   deleteNoteHandler,
   getAllNotesHandler,
   getNoteByIdHandler,
   updateNoteHandler,
+  getNoteByUserHandler,
 };

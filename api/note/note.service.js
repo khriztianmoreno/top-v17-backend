@@ -20,7 +20,10 @@ async function getAllNotes() {
  */
 async function getNoteById(id) {
   try {
-    const note = await Note.findById(id);
+    const note = await Note.findById(id).populate({
+      path: 'userId',
+      select: 'name email',
+    });
     return note;
   } catch (error) {
     throw error;
@@ -71,10 +74,20 @@ async function deleteNote(id) {
   }
 }
 
+async function getNoteByUser(userId) {
+  try {
+    const notes = await Note.find({ userId });
+    return notes;
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   createNote,
   deleteNote,
   getAllNotes,
   getNoteById,
   updateNote,
+  getNoteByUser,
 };

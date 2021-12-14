@@ -7,7 +7,11 @@ const NoteSchema = new mongoose.Schema(
       required: true,
     },
     important: Boolean,
-    date: String,
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
   },
   {
     timestamps: true,
