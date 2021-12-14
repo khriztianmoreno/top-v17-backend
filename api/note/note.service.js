@@ -20,10 +20,7 @@ async function getAllNotes() {
  */
 async function getNoteById(id) {
   try {
-    const note = await Note.findById(id).populate({
-      path: 'userId',
-      select: 'name email',
-    });
+    const note = await Note.findById(id);
     return note;
   } catch (error) {
     throw error;
