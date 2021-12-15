@@ -3,6 +3,7 @@ const express = require('express');
 const expressConfig = require('./config/express');
 const connectDB = require('./config/database');
 const routes = require('./routes');
+const { log } = require('./utils/logger');
 
 const app = express();
 
@@ -18,7 +19,7 @@ app.listen(PORT, () => {
   // Routes
   routes(app);
 
-  console.log(`Server running 🤖 at http://localhost:${PORT}/`);
+  log.info(`Server running 🤖 at http://localhost:${PORT}/`);
 });
 
 module.exports = app;

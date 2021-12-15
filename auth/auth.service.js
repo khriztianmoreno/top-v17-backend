@@ -18,6 +18,10 @@ function isAuthenticated() {
         // Validate token
         const payload = await validateToken(token);
 
+        if (!payload) {
+          return res.status(401).end();
+        }
+
         // Attach user to request
         const user = await getUserByEmail(payload.email);
 
@@ -40,8 +44,8 @@ function isAuthenticated() {
 /**
  * Checks if the user role meets the minimum requirements of the route
  */
-function hasRole(roleRequired) {
-  if (!roleRequired) {
+function hasRole(rolesRequired = []) {
+  if (!rolesRequired.length) {
     throw new Error('Required role needs to be set');
   }
 
@@ -49,7 +53,7 @@ function hasRole(roleRequired) {
     .use(isAuthenticated())
     .use((req, res, next) => {
       const { role } = req.user;
-      if (~config.userRoles.indexOf(role) && ~roleRequired.indexOf(role)) {
+      if (rolesRequired.includes(role)) {
         next();
       } else {
         res.status(403).send('Forbidden');

@@ -17,7 +17,7 @@ router.get('/', getAllNotesHandler);
 router.post('/', isAuthenticated(), createNoteHandler);
 router.get('/:id', getNoteByIdHandler);
 router.get('/user/:userId', getNoteByUserHandler);
-router.delete('/:id', hasRole('user'), deleteNoteHandler);
+router.delete('/:id', hasRole(['company', 'viewer']), deleteNoteHandler);
 router.patch('/:id', updateNoteHandler);
 
 module.exports = router;

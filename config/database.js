@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+const { log } = require('../utils/logger');
+
 const URI = process.env.DB_URI;
 
 async function connectDB() {
@@ -8,9 +10,9 @@ async function connectDB() {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log('MongoDB Connected');
+    log.info('MongoDB Connected');
   } catch (error) {
-    console.log(error);
+    log.error(error);
     process.exit(1);
   }
 }
