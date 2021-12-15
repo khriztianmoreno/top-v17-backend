@@ -9,13 +9,15 @@ const {
   getNoteByUserHandler,
 } = require('./note.controller');
 
+const { isAuthenticated, hasRole } = require('../../auth/auth.service');
+
 const router = Router();
 
 router.get('/', getAllNotesHandler);
-router.post('/', createNoteHandler);
+router.post('/', isAuthenticated(), createNoteHandler);
 router.get('/:id', getNoteByIdHandler);
 router.get('/user/:userId', getNoteByUserHandler);
-router.delete('/:id', updateNoteHandler);
-router.patch('/:id', deleteNoteHandler);
+router.delete('/:id', hasRole('user'), deleteNoteHandler);
+router.patch('/:id', updateNoteHandler);
 
 module.exports = router;

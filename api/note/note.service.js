@@ -5,12 +5,8 @@ const Note = require('./note.model');
  * @returns all notes
  */
 async function getAllNotes() {
-  try {
-    const notes = await Note.find();
-    return notes;
-  } catch (error) {
-    throw error;
-  }
+  const notes = await Note.find();
+  return notes;
 }
 
 /**
@@ -19,15 +15,8 @@ async function getAllNotes() {
  * @returns note
  */
 async function getNoteById(id) {
-  try {
-    const note = await Note.findById(id).populate({
-      path: 'userId',
-      select: 'name email',
-    });
-    return note;
-  } catch (error) {
-    throw error;
-  }
+  const note = await Note.findById(id);
+  return note;
 }
 
 /**
@@ -36,13 +25,9 @@ async function getNoteById(id) {
  * @returns Note created
  */
 async function createNote(note) {
-  try {
-    const newNote = new Note(note);
-    const savedNote = await newNote.save();
-    return savedNote;
-  } catch (error) {
-    throw error;
-  }
+  const newNote = new Note(note);
+  const savedNote = await newNote.save();
+  return savedNote;
 }
 
 /**
@@ -52,12 +37,8 @@ async function createNote(note) {
  * @returns note updated
  */
 async function updateNote(id, note) {
-  try {
-    const updatedNote = await Note.findByIdAndUpdate(id, note);
-    return updatedNote;
-  } catch (error) {
-    throw error;
-  }
+  const updatedNote = await Note.findByIdAndUpdate(id, note);
+  return updatedNote;
 }
 
 /**
@@ -66,21 +47,13 @@ async function updateNote(id, note) {
  * @returns Note deleted
  */
 async function deleteNote(id) {
-  try {
-    const deletedNote = await Note.findByIdAndDelete(id);
-    return deletedNote;
-  } catch (error) {
-    throw error;
-  }
+  const deletedNote = await Note.findByIdAndDelete(id);
+  return deletedNote;
 }
 
 async function getNoteByUser(userId) {
-  try {
-    const notes = await Note.find({ userId });
-    return notes;
-  } catch (error) {
-    throw error;
-  }
+  const notes = await Note.find({ userId });
+  return notes;
 }
 
 module.exports = {

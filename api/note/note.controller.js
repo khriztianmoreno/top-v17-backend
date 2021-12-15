@@ -32,8 +32,14 @@ async function getNoteByIdHandler(req, res) {
 }
 
 async function createNoteHandler(req, res) {
+  const { user } = req;
+
   try {
-    const note = await createNote(req.body);
+    const newNote = {
+      ...req.body,
+      userId: user._id,
+    };
+    const note = await createNote(newNote);
     return res.status(201).json(note);
   } catch (error) {
     return res.status(500).json({ error: error.message });
@@ -55,7 +61,7 @@ async function updateNoteHandler(req, res) {
   }
 }
 
-async function deleteNoteHandler(req, res) {
+async function deleteNoteHandler(req, res, next) {
   const { id } = req.params;
   try {
     const note = await deleteNote(id);
