@@ -19,7 +19,7 @@ app.listen(PORT, () => {
   // Routes
   routes(app);
 
-  log.info(`Server running 🤖 at http://localhost:${PORT}/`);
+  log.info(`Server running 🤖🚀 at http://localhost:${PORT}/`);
 });
 
 module.exports = app;
