@@ -1,8 +1,11 @@
+const path = require('path');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
 const { version } = require('../package.json');
 const { log } = require('../utils/logger');
+
+const routesApi = path.join(__dirname, '/../api/**/index.js');
 
 const options = {
   definition: {
@@ -47,13 +50,12 @@ const options = {
       },
     ],
   },
-  apis: ['../routes.js'],
+  apis: [routesApi],
 };
 
 const swaggerSpec = swaggerJsdoc(options);
 
 function swaggerDocs(app, port) {
-  // connector(app, options.definition);
   // Swagger page
   app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 

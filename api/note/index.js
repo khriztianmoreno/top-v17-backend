@@ -15,6 +15,17 @@ const validateRequest = require('../../middleware/validateRequest');
 
 const router = Router();
 
+/**
+ * @swagger
+ * /notes:
+ *  get:
+ *     tags:
+ *     - notes
+ *     description: get all notes
+ *     responses:
+ *       200:
+ *         description: App is up and running
+ */
 router.get('/', getAllNotesHandler);
 router.post(
   '/',
