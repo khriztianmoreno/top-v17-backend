@@ -1,25 +1,35 @@
 const express = require('express');
+const http = require('http');
 
 const expressConfig = require('./config/express');
 const connectDB = require('./config/database');
+const swaggerDocs = require('./config/swagger');
 const routes = require('./routes');
 const { log } = require('./utils/logger');
 
 const app = express();
+const server = http.createServer(app);
 
 expressConfig(app);
 
-const PORT = process.env.PORT;
+function startServer() {
+  const PORT = process.env.PORT;
 
-// Start server
-app.listen(PORT, () => {
-  // connect to database
-  connectDB();
+  // Start server
+  server.listen(PORT, async () => {
+    // connect to database
+    connectDB();
 
-  // Routes
-  routes(app);
+    // Routes
+    routes(app);
 
-  log.info(`Server running 🤖🚀 at http://localhost:${PORT}/`);
-});
+    // Swagger docs
+    swaggerDocs(app, PORT);
+
+    log.info(`🤖🚀 Server running at http://localhost:${PORT}/`);
+  });
+}
+
+setImmediate(startServer);
 
 module.exports = app;

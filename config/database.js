@@ -10,7 +10,7 @@ async function connectDB() {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    log.info('MongoDB Connected');
+    log.info('💾💻 MongoDB Connected');
   } catch (error) {
     log.error(error);
     process.exit(1);
