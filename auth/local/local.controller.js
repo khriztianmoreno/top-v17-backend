@@ -7,15 +7,15 @@ async function loginUserHandler(req, res) {
     const user = await findOneUser({ email });
 
     if (!user) {
-      return res.status(400).json({
-        message: 'User not found',
+      return res.status(401).json({
+        message: 'Invalid password or email',
       });
     }
 
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-      return res.status(400).json({
-        message: 'Invalid password',
+      return res.status(401).json({
+        message: 'Invalid password or email',
       });
     }
 

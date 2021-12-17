@@ -7,6 +7,8 @@ const {
   getNoteByUser,
 } = require('./note.service');
 
+const { log } = require('../../utils/logger');
+
 async function getAllNotesHandler(req, res) {
   try {
     const notes = await getAllNotes();
@@ -39,9 +41,11 @@ async function createNoteHandler(req, res) {
       ...req.body,
       userId: user._id,
     };
+
     const note = await createNote(newNote);
     return res.status(201).json(note);
   } catch (error) {
+    log.error(error.message);
     return res.status(500).json({ error: error.message });
   }
 }
