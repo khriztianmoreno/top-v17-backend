@@ -1,6 +1,26 @@
 const nodemailer = require('nodemailer');
+const sgMail = require('@sendgrid/mail');
 
 const { log } = require('../utils/logger');
+
+async function sendEmail(data) {
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+  const msg = {
+    to: data.to, // Change to your recipient
+    from: 'No Reply<cristian.moreno@makeitreal.camp>', // Change to your verified sender
+    subject: data.subject,
+    template_id: data.template_id,
+    dynamic_template_data: data.dynamic_template_data,
+  };
+
+  try {
+    await sgMail.send(msg);
+    return true;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 async function sendMailNodeMailer(data) {
   // create reusable transporter object using the default SMTP transport
@@ -48,4 +68,5 @@ async function sendMailNodeMailer(data) {
 
 module.exports = {
   sendMailNodeMailer,
+  sendEmail,
 };
