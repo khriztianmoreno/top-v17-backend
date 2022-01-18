@@ -1,3 +1,5 @@
+const get = require('lodash/get');
+
 const User = require('./user.model');
 
 async function getUserById(id) {
@@ -17,6 +19,20 @@ async function createUser(user) {
 
 async function updateUser(id, user) {
   const updatedUser = await User.findByIdAndUpdate(id, user, { new: true });
+  return updatedUser;
+}
+
+async function updateBillingCards(user, card) {
+  const creditCards = get(user, 'billing.creditCards', []);
+  const customer = {
+    billing: {
+      creditCards: creditCards.concat(card),
+    },
+  };
+
+  const updatedUser = await User.findByIdAndUpdate(user._id, customer, {
+    new: true,
+  });
   return updatedUser;
 }
 
@@ -43,4 +59,5 @@ module.exports = {
   getUserByEmail,
   getUserById,
   updateUser,
+  updateBillingCards,
 };
