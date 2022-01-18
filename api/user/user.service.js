@@ -22,7 +22,7 @@ async function updateUser(id, user) {
   return updatedUser;
 }
 
-async function updateBillingCards(user, card) {
+async function addBillingCards(user, card) {
   const creditCards = get(user, 'billing.creditCards', []);
   const customer = {
     billing: {
@@ -33,6 +33,24 @@ async function updateBillingCards(user, card) {
   const updatedUser = await User.findByIdAndUpdate(user._id, customer, {
     new: true,
   });
+
+  return updatedUser;
+}
+
+async function addBillingCustomerId(user, customerId) {
+  const creditCards = get(user, 'billing.creditCards', []);
+
+  const customer = {
+    billing: {
+      creditCards,
+      customerId,
+    },
+  };
+
+  const updatedUser = await User.findByIdAndUpdate(user._id, customer, {
+    new: true,
+  });
+
   return updatedUser;
 }
 
@@ -52,6 +70,8 @@ async function findOneUser(query) {
 }
 
 module.exports = {
+  addBillingCards,
+  addBillingCustomerId,
   createUser,
   deleteUser,
   findOneUser,
@@ -59,5 +79,4 @@ module.exports = {
   getUserByEmail,
   getUserById,
   updateUser,
-  updateBillingCards,
 };
