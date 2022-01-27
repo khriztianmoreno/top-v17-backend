@@ -7,6 +7,24 @@ const ParamsSchema = Joi.object({
   id: Joi.objectId().required(),
 });
 
+/**
+ * @openapi
+ * components:
+ *   schema:
+ *     Note:
+ *       type: object
+ *       required:
+ *        - content
+ *       properties:
+ *         content:
+ *           type: string
+ *           description: Content of note
+ *           example: Generate documentation
+ *         important:
+ *           type: string
+ *           description: Is important?
+ *           example: false
+ */
 const PayloadSchema = Joi.object().keys({
   content: Joi.string().min(3).max(250).required(),
   important: Joi.boolean(),

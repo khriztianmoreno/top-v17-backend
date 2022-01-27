@@ -11,7 +11,7 @@ const validateSchema = (schema, property) => (req, res, next) => {
     });
   }
 
-  req.body = value;
+  req = value;
 
   next();
 };

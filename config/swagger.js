@@ -6,10 +6,11 @@ const { version } = require('../package.json');
 const { log } = require('../utils/logger');
 
 const routesApi = path.join(__dirname, '/../api/**/index.js');
+const schemasApi = path.join(__dirname, '/../api/**/**.schema.js');
 
 const options = {
   definition: {
-    openapi: '3.0.0',
+    openapi: '3.0.1',
     info: {
       title: 'Express API with Swagger',
       version,
@@ -26,10 +27,11 @@ const options = {
       },
     },
     components: {
-      securitySchemas: {
+      securitySchemes: {
         bearerAuth: {
           type: 'http',
           scheme: 'bearer',
+          in: 'header',
           bearerFormat: 'JWT',
         },
       },
@@ -50,7 +52,7 @@ const options = {
       },
     ],
   },
-  apis: [routesApi],
+  apis: [routesApi, schemasApi],
 };
 
 const swaggerSpec = swaggerJsdoc(options);
