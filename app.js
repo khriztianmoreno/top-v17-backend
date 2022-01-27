@@ -2,6 +2,7 @@ const express = require('express');
 
 const expressConfig = require('./config/express');
 const connectDB = require('./config/database');
+const swaggerDocs = require('./config/swagger');
 const routes = require('./routes');
 const { log } = require('./utils/logger');
 
@@ -18,6 +19,9 @@ app.listen(PORT, () => {
 
   // Routes
   routes(app);
+
+  // Swagger
+  swaggerDocs(app, PORT);
 
   log.info(`Server running 🤖🚀 at http://localhost:${PORT}/`);
 });
