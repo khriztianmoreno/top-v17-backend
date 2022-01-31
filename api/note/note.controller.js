@@ -6,6 +6,7 @@ const {
   updateNote,
   getNoteByUser,
 } = require('./note.service');
+const { emitEvent } = require('./note.event');
 
 const { log } = require('../../utils/logger');
 
@@ -43,6 +44,11 @@ async function createNoteHandler(req, res) {
     };
 
     const note = await createNote(newNote);
+
+    // emita un evento para que el socket escuche
+    // y actualice la lista de notas
+    emitEvent(note);
+
     return res.status(201).json(note);
   } catch (error) {
     log.error(error.message);
